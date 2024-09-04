@@ -1,0 +1,47 @@
+{{define "title"}}Search Snippets{{end}}
+
+{{define "main"}}
+<form action='/snippet/search' method='POST'>
+  <div>
+      <label>Title:</label>
+      {{with .Form.FieldErrors.title}}
+        <label class='error'>{{.}}</label>
+      {{end}}
+      <input type='text' name='title' value='{{.Form.Title}}'>
+  </div>
+  <div>
+      <label>Content:</label>
+      {{with .Form.FieldErrors.content}}
+        <label class='error'>{{.}}</label>
+      {{end}}
+      <input type='text' name='content' value='{{.Form.Content}}'>
+  </div>
+  <div>
+      <label>Expires (days):</label>
+      {{with .Form.FieldErrors.expires}}
+        <label class='error'>{{.}}</label>
+      {{end}}
+      <input type='text' name='expires' value='{{.Form.Expires}}'>
+  </div>
+  <div>
+    <input type='submit' value='Search snippets'>
+  </div>
+</form>
+
+{{if .Snippets}}
+  <h2>Search Results</h2>
+  <ul>
+    {{range .Snippets}}
+      <li>
+        <strong>{{.Title}}</strong><br>
+        {{.Content}}<br>
+        <small>Expires in: {{humanDate .Expires}}</small>
+      </li><br>
+    {{else}}
+      <li>No snippets found.</li>
+    {{end}}
+  </ul>
+{{else}}
+  <p>No snippets to display.</p>
+{{end}}
+{{end}}
